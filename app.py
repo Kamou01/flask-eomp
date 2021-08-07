@@ -1,7 +1,7 @@
 import hmac
 import sqlite3
 
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_jwt import JWT, jwt_required, current_identity
 
 
@@ -182,6 +182,38 @@ def update_product(id):
                     cursor = connection.cursor()
                     cursor.execute("UPDATE products SET name =? WHERE id", (put_data["name"], id))
 
+                    conn.commit()
+                    response['message'] = "Update was successful"
+                    response['status_code'] = 200
+
+            elif incoming_data.get("price") is not None:
+                put_data["price"] = incoming_data.get("price")
+
+                with sqlite3.connect('online_store.db') as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("UPDATE products SET price =? WHERE id", (put_data["price"], id))
+
+                    conn.commit()
+                    response['message'] = "Update was successful"
+                    response['status_code'] = 200
+
+            elif incoming_data.get("description") is not None:
+                put_data["description"] = incoming_data.get("description")
+
+                with sqlite3.connect('online_store.db') as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("UPDATE products SET description =? WHERE id", (put_data["description"], id))
+
+                    conn.commit()
+                    response['message'] = "Update was successful"
+                    response['status_code'] = 200
+
+            elif incoming_data.get("type") is not None:
+                put_data["type"] = incoming_data.get("type")
+
+                with sqlite3.connect('online_store.db') as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("UPDATE products SET type =? WHERE id", (put_data["type"], id))
                     conn.commit()
                     response['message'] = "Update was successful"
                     response['status_code'] = 200
